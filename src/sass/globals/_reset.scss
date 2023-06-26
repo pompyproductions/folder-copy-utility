@@ -1,0 +1,31 @@
+// global behavior
+
+html {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    box-sizing: inherit;
+    &::before, &::after {
+        box-sizing: inherit;
+        font-family: inherit;
+    }
+}
+
+// specific element styles
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+img, video {
+    max-width: 100%;
+}

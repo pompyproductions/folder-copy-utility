@@ -1,0 +1,23 @@
+@use "./breakpoints" as *;
+
+@mixin disable-selection {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@mixin page-grid {
+    display: grid;
+    gap: .7rem;
+    grid-template-columns: 1fr 1fr;
+    @include break-at("small") {
+        gap: .8rem;
+    }
+    @include break-at("medium") {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @include break-at("large") {
+        grid-template-columns: 1fr repeat(3, 320px) 1fr;
+    }
+}

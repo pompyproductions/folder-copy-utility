@@ -1,0 +1,15 @@
+$breakpoints: (
+    "thin": 320px,
+    "small": 720px,
+    "medium": 1024px,
+    "large": 1200px,
+    "huge": 1440px
+);
+
+@mixin break-at($size) {
+    @if map-has-key($breakpoints, $size) {
+        @media only screen and (min-width: map-get($breakpoints, $size)) {
+            @content;
+        }
+    }
+}

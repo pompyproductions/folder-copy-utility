@@ -1,5 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("API", {
-  ping: () => ipcRenderer.invoke("pong")
+  openFile: () => ipcRenderer.invoke("openFile"),
+  selectTarget: () => ipcRenderer.invoke("selectTarget"),
+  makeFolderStructure: (options) => ipcRenderer.invoke("makeFolderStructure", options),
 })

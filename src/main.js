@@ -5,6 +5,33 @@ const fs = require("fs");
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
 
+async function handleFileOpen() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    properties: ["openDirectory"]
+  });
+  if (!canceled) {
+    return fs.readdirSync(filePaths[0], {
+      withFileTypes: true
+    }).filter(dirent => dirent.isDirectory())
+  }
+}
+
+async function handleSelectTarget() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    properties: ["openDirectory"]
+  });
+  if (!canceled) return (filePaths[0])
+}
+
+async function handleMkdir(event, options) {
+  // return options
+  console.log(options.folders);
+  console.log(options.target);
+  for (newFolder of options.folders) {
+    fs.mkdirSync(path.join(options.target, newFolder), {recursive: true});
+  }
+}
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -29,7 +56,9 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  ipcMain.handle("ping", () => "pong!");
+  ipcMain.handle("openFile", handleFileOpen);
+  ipcMain.handle("selectTarget", handleSelectTarget);
+  ipcMain.handle("makeFolderStructure", handleMkdir);
   createWindow();
 });
 

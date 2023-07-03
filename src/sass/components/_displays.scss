@@ -1,0 +1,18 @@
+.dirpath-select {
+  display: flex;
+  gap: 1.2rem
+}
+
+.list-display {
+  background-color: var(--dark-blue);
+  list-style: none;
+  height: 100%;
+  li {
+    &::before {
+      content: "/";
+    }
+    &.file-item {
+      color: var(--yellow);
+    }
+  }
+}

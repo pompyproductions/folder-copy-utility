@@ -6,12 +6,27 @@
 
   </head>
   <body>
-    <h1>folder copy utility</h1>
-    <button id="source-folder">choose source folder</button>
-    <button id="target-folder">choose target folder</button>
-    <button id="run">copy!</button>
-    <ul class="folder-view">
-      <li>nothing selected yet</li>
-    </ul>
+    <header>
+      <h1>folder copy utility</h1>
+      <div class="dirpath-select">
+        <button id="source-folder">Source folder:</button>
+        <p class="dirpath-display" id="source-path">no folder selected</p>
+      </div>
+      <div class="dirpath-select">
+        <button id="target-folder">Target folder:</button>
+        <p class="dirpath-display" id="target-path">no folder selected</p>
+      </div>
+    </header>
+    <main>
+      <ul class="list-display" id="source-contents">
+      </ul>
+    </main>
+    <aside>
+      <button>copy files!</button>
+      <ul class="list-display" id="filetypes">
+      </ul>
+    </aside>
+    <footer>
+    </footer>
   </body>
 </html>

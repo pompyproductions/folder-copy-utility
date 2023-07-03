@@ -1,27 +1,11 @@
 import "./sass/styles.scss"
-
-const dirlist = document.querySelector("ul");
 const direntsToCopy = [];
 let targetDir;
-
-// async function handleFolderRead() {
-//   const dirs = await window.API.openFile();
-//   if (dirs && dirs.length) {
-//     dirlist.replaceChildren();
-//     dirsToCopy.length = 0;
-//     for (let dirent of dirs) {
-//       const li = document.createElement("li");
-//       li.textContent = dirent.name;
-//       dirlist.append(li);
-//       dirsToCopy.push(dirent.name);
-//     }
-//   }
-//   console.log(dirsToCopy);
-// }
 
 async function handleFolderRead() {
   const sourceFolder = await window.API.openFile();
   if (sourceFolder && sourceFolder.children.length) {
+    displays.source.textContent = sourceFolder.fullPath;
     direntsToCopy.length = 0;
     for (let dirent of sourceFolder.children) {
       direntsToCopy.push(dirent)
@@ -31,21 +15,21 @@ async function handleFolderRead() {
 }
 
 function updateFolderList() {
-  dirlist.replaceChildren();
+  displays.dirs.replaceChildren();
   for (let dirent of direntsToCopy) {
     const li = document.createElement("li");
     li.textContent = dirent.name;
     if (!dirent.isDir) {
       li.classList.add("file-item")
     }
-    dirlist.append(li);
+    displays.dirs.append(li);
   }
 }
 
 async function handleFolderTarget() {
   const dir = await window.API.selectTarget();
   if (dir) {
-    // document.getElementById("target-address").textContent = dir;
+    displays.target.textContent = dir;
     targetDir = dir;
   }
 }
@@ -64,6 +48,13 @@ const buttons = {
   source: document.getElementById("source-folder"),
   target: document.getElementById("target-folder"),
   run: document.getElementById("run")
+}
+
+const displays = {
+  source: document.getElementById("source-path"),
+  target: document.getElementById("target-path"),
+  dirs: document.getElementById("source-contents"),
+  filetypes: document.getElementById("filetypes")
 }
 
 buttons.source.addEventListener("click", handleFolderRead);

@@ -8,4 +8,7 @@
   &::before {
     content: "/";
   }
+  &.file-item {
+    color: black;
+  }
 }

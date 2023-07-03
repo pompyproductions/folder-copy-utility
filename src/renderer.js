@@ -1,23 +1,45 @@
-// import './index.css';
 import "./sass/styles.scss"
 
 const dirlist = document.querySelector("ul");
-const dirsToCopy = [];
+const direntsToCopy = [];
 let targetDir;
 
+// async function handleFolderRead() {
+//   const dirs = await window.API.openFile();
+//   if (dirs && dirs.length) {
+//     dirlist.replaceChildren();
+//     dirsToCopy.length = 0;
+//     for (let dirent of dirs) {
+//       const li = document.createElement("li");
+//       li.textContent = dirent.name;
+//       dirlist.append(li);
+//       dirsToCopy.push(dirent.name);
+//     }
+//   }
+//   console.log(dirsToCopy);
+// }
+
 async function handleFolderRead() {
-  const dirs = await window.API.openFile();
-  if (dirs && dirs.length) {
-    dirlist.replaceChildren();
-    dirsToCopy.length = 0;
-    for (let dirent of dirs) {
-      const li = document.createElement("li");
-      li.textContent = dirent.name;
-      dirlist.append(li);
-      dirsToCopy.push(dirent.name);
-    }
+  const sourceFolder = await window.API.openFile();
+  if (sourceFolder && sourceFolder.children.length) {
+    direntsToCopy.length = 0;
+    for (let dirent of sourceFolder.children) {
+      direntsToCopy.push(dirent)
+    };
+    updateFolderList();
   }
-  console.log(dirsToCopy);
+}
+
+function updateFolderList() {
+  dirlist.replaceChildren();
+  for (let dirent of direntsToCopy) {
+    const li = document.createElement("li");
+    li.textContent = dirent.name;
+    if (!dirent.isDir) {
+      li.classList.add("file-item")
+    }
+    dirlist.append(li);
+  }
 }
 
 async function handleFolderTarget() {

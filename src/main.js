@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const path = require('path');
 const fs = require("fs");
+const getFolderStructure = require("./modules/getFolderStructure");
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
@@ -10,10 +11,12 @@ async function handleFileOpen() {
     properties: ["openDirectory"]
   });
   if (!canceled) {
-    return fs.readdirSync(filePaths[0], {
-      withFileTypes: true
-    }).filter(dirent => dirent.isDirectory())
+    return getFolderStructure(filePaths[0]);
+    // fs.readdirSync(filePaths[0], {
+    //   withFileTypes: true
+    // }).filter(dirent => dirent.isDirectory())
   }
+  return false
 }
 
 async function handleSelectTarget() {

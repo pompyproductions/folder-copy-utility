@@ -1,5 +1,6 @@
 import "./sass/styles.scss"
 const direntsToCopy = [];
+const domalt = require("domalt");
 let targetDir;
 
 async function handleFolderRead() {
@@ -14,15 +15,32 @@ async function handleFolderRead() {
   }
 }
 
+function makeDirentElement(dirent, hidden = false, indent = 0) {
+  const elem = document.createElement("div");
+  elem.classList.add("dirent");
+  elem.addEventListener("click", (e) => {
+    for (let child of e.target.children) {
+      child.classList.toggle("hidden")
+    }
+  })
+  if (hidden) elem.classList.add("hidden");
+  if (indent) elem.style.marginLeft = `${indent}rem`
+  elem.textContent = dirent.name;
+  if (dirent.isDir) {
+    elem.classList.add("dir");
+    indent++;
+    for (let child of dirent.children) {
+      elem.append(makeDirentElement(child, true, indent));
+    }
+  }
+  return elem;
+}
+
 function updateFolderList() {
   displays.dirs.replaceChildren();
-  for (let dirent of direntsToCopy) {
-    const li = document.createElement("li");
-    li.textContent = dirent.name;
-    if (!dirent.isDir) {
-      li.classList.add("file-item")
-    }
-    displays.dirs.append(li);
+  const folderList = direntsToCopy.sort((a, b) => !a.isDir && b.isDir ? 1 : -1)
+  for (let dirent of folderList) {
+    displays.dirs.append(makeDirentElement(dirent));
   }
 }
 

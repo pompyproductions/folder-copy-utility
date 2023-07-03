@@ -36,6 +36,7 @@
     "style-loader": "^3.3.3"
   },
   "dependencies": {
+    "domalt": "^0.2.1",
     "electron-squirrel-startup": "^1.0.0"
   }
 }

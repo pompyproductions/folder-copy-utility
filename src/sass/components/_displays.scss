@@ -1,3 +1,13 @@
+@use "../globals/mixins" as *;
+
+::-webkit-scrollbar {
+  width: 2px;
+  background-color: var(--dark-blue);
+  &-thumb {
+    background-color: var(--white);
+  }
+}
+
 .dirpath-select {
   display: flex;
   gap: 1.2rem
@@ -7,12 +17,24 @@
   background-color: var(--dark-blue);
   list-style: none;
   height: 100%;
-  li {
-    &::before {
-      content: "/";
+  overflow-y: auto;
+  .dirent {
+    color: var(--yellow);
+    @include disable-selection;
+
+    // &::before {
+    //   content: "/";
+    // }
+    &.hidden {
+      height: 0;
+      overflow: hidden;
     }
-    &.file-item {
-      color: var(--yellow);
+    &.dir {
+      color: var(--white);
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

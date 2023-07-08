@@ -1,8 +1,30 @@
 // Font imports go here
+
+// Cutive Mono
 @font-face {
   font-family: "Mono";
-  src: url("../fonts/IBMPlexMono-Light.ttf") format("truetype");
+  src: url("../fonts/CutiveMono-Regular.ttf") format("truetype");
   font-weight: 300;
+  font-style: normal;
+}
+
+// Archivo
+@font-face {
+  font-family: "Sans";
+  src: url("../fonts/Archivo-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Sans";
+  src: url("../fonts/Archivo-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Sans";
+  src: url("../fonts/Archivo-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -13,4 +35,7 @@
   --yellow: #dbdd90;
   --dark-blue: #44616c;
   --white: #fbf0f0;
+
+  --black-gradient: linear-gradient(225deg, #191c1b, #1a1d1d, #1b1f1f, #1d2021, #1e2123, #202324, #222426);
+
 }

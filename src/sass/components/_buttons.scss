@@ -1,0 +1,15 @@
+button {
+  padding: 0.5em 1.2em;
+  border: none;
+  min-width: 12rem;
+  background-color: #E1F1EB;
+  border-bottom: 3px solid #80a2a7;
+  font-weight: 700;
+  font-size: .9rem;
+  &.green {
+    border-bottom-color: #21975d
+  }
+  &.red {
+    border-bottom-color: #d30d0d
+  }
+}

@@ -1,6 +1,6 @@
-import "./sass/styles.scss"
+import "./sass/styles.scss";
+import dirDisplay from "./modules/dirDisplay";
 const direntsToCopy = [];
-const domalt = require("domalt");
 let targetDir;
 
 async function handleFolderRead() {
@@ -11,36 +11,7 @@ async function handleFolderRead() {
     for (let dirent of sourceFolder.children) {
       direntsToCopy.push(dirent)
     };
-    updateFolderList();
-  }
-}
-
-function makeDirentElement(dirent, hidden = false, indent = 0) {
-  const elem = document.createElement("div");
-  elem.classList.add("dirent");
-  elem.addEventListener("click", (e) => {
-    for (let child of e.target.children) {
-      child.classList.toggle("hidden")
-    }
-  })
-  if (hidden) elem.classList.add("hidden");
-  if (indent) elem.style.marginLeft = `${indent}rem`
-  elem.textContent = dirent.name;
-  if (dirent.isDir) {
-    elem.classList.add("dir");
-    indent++;
-    for (let child of dirent.children) {
-      elem.append(makeDirentElement(child, true, indent));
-    }
-  }
-  return elem;
-}
-
-function updateFolderList() {
-  displays.dirs.replaceChildren();
-  const folderList = direntsToCopy.sort((a, b) => !a.isDir && b.isDir ? 1 : -1)
-  for (let dirent of folderList) {
-    displays.dirs.append(makeDirentElement(dirent));
+    dirDisplay.update(direntsToCopy);
   }
 }
 
@@ -73,8 +44,8 @@ const displays = {
   target: document.getElementById("target-path"),
   dirs: document.getElementById("source-contents"),
   filetypes: document.getElementById("filetypes")
-}
+} 
 
 buttons.source.addEventListener("click", handleFolderRead);
 buttons.target.addEventListener("click", handleFolderTarget);
-buttons.run.addEventListener("click", handleFolderWrite);
+// buttons.run.addEventListener("click", handleFolderWrite);

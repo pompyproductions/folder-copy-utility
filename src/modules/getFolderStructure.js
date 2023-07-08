@@ -18,6 +18,7 @@ function getFolderStructure(dirpath, name = "root") {
     } else if (children[i].isFile()) {
       result.children.push({ name: children[i].name, isDir: false, fullPath: newPath })
     }
+    result.children = result.children.sort((a, b) => !a.isDir && b.isDir ? 1 : -1)
   }
 
   return result;

@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const path = require('path');
 const fs = require("fs");
 const getFolderStructure = require("./modules/getFolderStructure");
+const copyDirentRecursive = require("./modules/copyDirents");
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
@@ -26,13 +27,10 @@ async function handleSelectTarget() {
   if (!canceled) return (filePaths[0])
 }
 
-async function handleMkdir(event, options) {
-  // return options
-  console.log(options.folders);
-  console.log(options.target);
-  for (newFolder of options.folders) {
-    fs.mkdirSync(path.join(options.target, newFolder), {recursive: true});
-  }
+async function handleCopy(event, filepath, dirents, excludes) {
+  dirents.forEach(dirent => copyDirentRecursive(
+    filepath, dirent, excludes
+  ))
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -61,7 +59,7 @@ const createWindow = () => {
 app.on('ready', () => {
   ipcMain.handle("openFile", handleFileOpen);
   ipcMain.handle("selectTarget", handleSelectTarget);
-  ipcMain.handle("makeFolderStructure", handleMkdir);
+  ipcMain.handle("copyDirents", handleCopy);
   createWindow();
 });
 

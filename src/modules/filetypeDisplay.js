@@ -24,6 +24,7 @@ const getFileTypes = (dirent) => {
 }
 
 const update = (dirents) => {
+  display.replaceChildren()
   const filetypes = new Set();
   for (let dirent of dirents) {
     mergeSets(filetypes, getFileTypes(dirent))

@@ -1,19 +1,19 @@
 import "./sass/styles.scss";
 import dirDisplay from "./modules/dirDisplay";
 import filetypeDisplay from "./modules/filetypeDisplay";
-const direntsToCopy = [];
+const dirents = [];
 let targetDir;
 
 async function handleFolderRead() {
   const sourceFolder = await window.API.openFile();
   if (sourceFolder && sourceFolder.children.length) {
     displays.source.textContent = sourceFolder.fullPath;
-    direntsToCopy.length = 0;
+    dirents.length = 0;
     for (let dirent of sourceFolder.children) {
-      direntsToCopy.push(dirent)
+      dirents.push(dirent)
     };
-    dirDisplay.update(direntsToCopy);
-    filetypeDisplay.update(direntsToCopy);
+    dirDisplay.update(dirents);
+    filetypeDisplay.update(dirents);
   }
 }
 
@@ -26,13 +26,16 @@ async function handleFolderTarget() {
 }
 
 async function handleFolderWrite() {
-  if (!targetDir || !dirsToCopy) return;
-  const options = {
-    target: targetDir,
-    folders: dirsToCopy
-  };
-  const result = await window.API.makeFolderStructure(options);
-  console.log(result);
+  console.log("click")
+  if (!targetDir || !dirents) return; // error message actions here
+
+  // const options = {
+  //   dirents,
+  //   filepath: targetDir,
+  // };
+
+  const result = await window.API.copyDirents(targetDir, dirents, []);
+  // console.log(result);
 }
 
 const buttons = {
@@ -50,4 +53,4 @@ const displays = {
 
 buttons.source.addEventListener("click", handleFolderRead);
 buttons.target.addEventListener("click", handleFolderTarget);
-// buttons.run.addEventListener("click", handleFolderWrite);
+buttons.run.addEventListener("click", handleFolderWrite);

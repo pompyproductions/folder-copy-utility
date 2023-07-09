@@ -1,3 +1,5 @@
+@use "../globals/mixins" as *;
+
 button {
   padding: 0.5em 1.2em;
   border: none;
@@ -12,4 +14,8 @@ button {
   &.red {
     border-bottom-color: #d30d0d
   }
+}
+
+label {
+  @include disable-selection;
 }

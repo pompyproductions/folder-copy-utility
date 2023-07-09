@@ -16,7 +16,12 @@ function getFolderStructure(dirpath, name = "root") {
     if (children[i].isDirectory()) {
       result.children.push(getFolderStructure(newPath, children[i].name));
     } else if (children[i].isFile()) {
-      result.children.push({ name: children[i].name, isDir: false, fullPath: newPath })
+      result.children.push({ 
+        name: children[i].name, 
+        isDir: false, 
+        fullPath: newPath,
+        filetype: children[i].name.match(/\.[^.]+$/)[0]
+      })
     }
     result.children = result.children.sort((a, b) => !a.isDir && b.isDir ? 1 : -1)
   }

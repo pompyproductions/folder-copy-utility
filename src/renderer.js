@@ -1,5 +1,6 @@
 import "./sass/styles.scss";
 import dirDisplay from "./modules/dirDisplay";
+import filetypeDisplay from "./modules/filetypeDisplay";
 const direntsToCopy = [];
 let targetDir;
 
@@ -12,6 +13,7 @@ async function handleFolderRead() {
       direntsToCopy.push(dirent)
     };
     dirDisplay.update(direntsToCopy);
+    filetypeDisplay.update(direntsToCopy);
   }
 }
 

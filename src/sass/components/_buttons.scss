@@ -8,11 +8,19 @@ button {
   border-bottom: 3px solid #80a2a7;
   font-weight: 700;
   font-size: .9rem;
+  cursor: pointer;
+  transition: all 0.1s;
   &.green {
     border-bottom-color: #21975d
   }
   &.red {
     border-bottom-color: #d30d0d
+  }
+  &:hover {
+    background-color: #f0fff9;
+  }
+  &:active {
+    transform: translateY(2px)
   }
 }
 

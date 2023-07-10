@@ -21,6 +21,10 @@ module.exports = [
     use: ["style-loader", "css-loader", "sass-loader"]
   },
   {
+    test: /\.svg$/,
+    use: "svg-inline-loader",
+  },
+  {
     test: /\.(woff|woff2|eot|ttf|otf)$/i,
     type: 'asset/resource',
   }

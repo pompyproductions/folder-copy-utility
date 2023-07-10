@@ -15,19 +15,20 @@ function getFolderStructure(dirpath, name = "root") {
     const newPath = path.join(dirpath, children[i].name);
     if (children[i].isDirectory()) {
       result.children.push(getFolderStructure(newPath, children[i].name));
-    } else if (children[i].isFile()) {
-      const childFile = {
-        name: children[i].name,
-        isDir: false,
-        fullPath: newPath,
-      };
-      const extension = childFile.name.match(/\.[^.]+$/);
-      if (extension) childFile.filetype = extension[0];
-      result.children.push(childFile);
     }
-    result.children = result.children.sort((a, b) =>
-      !a.isDir && b.isDir ? 1 : -1
-    );
+    // } else if (children[i].isFile()) {
+    //   const childFile = {
+    //     name: children[i].name,
+    //     isDir: false,
+    //     fullPath: newPath,
+    //   };
+    //   const extension = childFile.name.match(/\.[^.]+$/);
+    //   if (extension) childFile.filetype = extension[0];
+    //   result.children.push(childFile);
+    // }
+    // result.children = result.children.sort((a, b) =>
+    //   !a.isDir && b.isDir ? 1 : -1
+    // );
   }
 
   return result;

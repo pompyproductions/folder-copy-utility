@@ -1,6 +1,8 @@
 import "./sass/styles.scss";
 import dirDisplay from "./modules/dirDisplay";
 import filetypeDisplay from "./modules/filetypeDisplay";
+import domalt from "domalt";
+const iconGear = require("./svg/gear-solid.svg")
 const dirents = [];
 let targetDir;
 
@@ -54,3 +56,13 @@ const displays = {
 buttons.source.addEventListener("click", handleFolderRead);
 buttons.target.addEventListener("click", handleFolderTarget);
 buttons.run.addEventListener("click", handleFolderWrite);
+
+
+const svgElement = document.createElement("div");
+svgElement.innerHTML = iconGear;
+
+document.querySelectorAll("button.cog").forEach(e => {
+  const elem = document.createElement("div");
+  elem.innerHTML = iconGear;
+  e.appendChild(elem.children[0]);
+})

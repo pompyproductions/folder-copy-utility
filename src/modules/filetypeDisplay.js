@@ -2,6 +2,7 @@ import domalt from "domalt";
 const display = document.getElementById("filetypes")
 
 const mergeSets = (target, source) => {
+  if (!source) return target; // can continue looping
   if (typeof source !== "object") {
     target.add(source);
   } else {
@@ -11,12 +12,11 @@ const mergeSets = (target, source) => {
 }
 
 const getFileTypes = (dirent) => {
-  if (!dirent.isDir) {
-    return dirent.filetype
+  if (!dirent.isDir) { 
+    return dirent.filetype // null is ok, it's checked against in "mergeSets"
   } else {
     const filetypes = new Set();
     for (let child of dirent.children) {
-      console.log(getFileTypes(child))
       mergeSets(filetypes, getFileTypes(child))
     }
     return filetypes

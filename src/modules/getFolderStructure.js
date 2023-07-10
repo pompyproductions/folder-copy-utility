@@ -6,7 +6,7 @@ function getFolderStructure(dirpath, name = "root") {
     name,
     isDir: true,
     fullPath: dirpath,
-    children: []
+    children: [],
   };
 
   const children = fs.readdirSync(dirpath, { withFileTypes: true });
@@ -16,14 +16,18 @@ function getFolderStructure(dirpath, name = "root") {
     if (children[i].isDirectory()) {
       result.children.push(getFolderStructure(newPath, children[i].name));
     } else if (children[i].isFile()) {
-      result.children.push({ 
-        name: children[i].name, 
-        isDir: false, 
+      const childFile = {
+        name: children[i].name,
+        isDir: false,
         fullPath: newPath,
-        filetype: children[i].name.match(/\.[^.]+$/)[0]
-      })
+      };
+      const extension = childFile.name.match(/\.[^.]+$/);
+      if (extension) childFile.filetype = extension[0];
+      result.children.push(childFile);
     }
-    result.children = result.children.sort((a, b) => !a.isDir && b.isDir ? 1 : -1)
+    result.children = result.children.sort((a, b) =>
+      !a.isDir && b.isDir ? 1 : -1
+    );
   }
 
   return result;

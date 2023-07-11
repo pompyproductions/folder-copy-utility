@@ -40,6 +40,7 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: hidden;
   .list-display {
     flex-grow: 1
   }
@@ -48,3 +49,4 @@ aside {
 footer {
   grid-area: footer;
 }
+

@@ -6,6 +6,30 @@ const iconGear = require("./svg/gear-solid.svg")
 const dirents = [];
 let targetDir;
 
+const buttons = {
+  source: document.getElementById("source-folder"),
+  sourceOpts: document.getElementById("source-folder-opts"),
+  target: document.getElementById("target-folder"),
+  targetOpts: document.getElementById("target-folder-opts"),
+  run: document.getElementById("run"),
+}
+
+const displays = {
+  source: document.getElementById("source-path"),
+  target: document.getElementById("target-path"),
+  dirs: document.getElementById("source-contents"),
+  filetypes: document.getElementById("filetypes"),
+  overlay: document.querySelector(".dialog-overlay")
+} 
+
+function handleSourceOptions() {
+  displays.overlay.classList.add("active")
+}
+
+function handleOverlayOutsideClick() {
+  displays.overlay.classList.remove("active")
+}
+
 async function handleFolderRead() {
   const sourceFolder = await window.API.openFile();
   if (sourceFolder && sourceFolder.children.length) {
@@ -40,23 +64,15 @@ async function handleFolderWrite() {
   // console.log(result);
 }
 
-const buttons = {
-  source: document.getElementById("source-folder"),
-  target: document.getElementById("target-folder"),
-  run: document.getElementById("run")
-}
 
-const displays = {
-  source: document.getElementById("source-path"),
-  target: document.getElementById("target-path"),
-  dirs: document.getElementById("source-contents"),
-  filetypes: document.getElementById("filetypes")
-} 
 
 buttons.source.addEventListener("click", handleFolderRead);
 buttons.target.addEventListener("click", handleFolderTarget);
 buttons.run.addEventListener("click", handleFolderWrite);
+buttons.sourceOpts.addEventListener("click", handleSourceOptions)
 
+displays.overlay.addEventListener("click", handleOverlayOutsideClick)
+document.querySelector(".dialog-container").addEventListener("click", e => e.stopPropagation())
 
 const svgElement = document.createElement("div");
 svgElement.innerHTML = iconGear;

@@ -72,3 +72,28 @@
 aside .list-display {
   grid-column: 1 / 3;
 }
+
+.dialog-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0 0 0 / 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s;
+  &.active {
+    opacity: 1;
+    pointer-events: all
+  }
+}
+
+.dialog-container {
+  background-color: #389b9b2e;
+  padding: 1rem;
+  border: 1px dashed #78b3ad;
+  width: 400px;
+  height: 300px;
+  font-weight: 600;
+}

@@ -90,10 +90,65 @@ aside .list-display {
 }
 
 .dialog-container {
-  background-color: #389b9b2e;
+  background-color: rgb(46 41 46 / 38%);
   padding: 1rem;
-  border: 1px dashed #78b3ad;
+  border: 2px dashed #313738;
   width: 400px;
-  height: 300px;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  align-items: center;
+  gap: 1rem;
   font-weight: 600;
+  h2 {
+    font-size: 1.2rem;
+  }
+  .close {
+    padding: .4em 1em;
+    min-width: auto;
+  }
+  .hsep {
+    height: 2px;
+    background-color: var(--white);
+    width: 100%;
+  }
+  .dialog-content {
+    display: grid;
+    gap: 0.4em;
+  }
+  .checkbox-group {
+    display: flex;
+    gap: 0.4em;
+    align-items: center;
+    font-weight: 400;
+    label {
+      cursor: pointer;
+    }
+  }
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 0.2em;
+  background-color: #313738;
+  transition: background-color 0.1s;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: .3em;
+    // visibility: hidden;
+    background-color: white;
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+  &:checked {
+    background-color: #505050;
+    &::before {
+      opacity: 1;
+    }
+  }
 }

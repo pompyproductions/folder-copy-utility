@@ -2,6 +2,8 @@ import "./sass/styles.scss";
 import dirDisplay from "./modules/dirDisplay";
 import filetypeDisplay from "./modules/filetypeDisplay";
 import domalt from "domalt";
+import modals from "./modules/modals";
+
 const iconGear = require("./svg/gear-solid.svg")
 const dirents = [];
 let targetDir;
@@ -23,11 +25,14 @@ const displays = {
 } 
 
 function handleSourceOptions() {
-  displays.overlay.classList.add("active")
+  modals.displayDialog()
+  // displays.overlay.classList.add("active")
 }
 
-function handleOverlayOutsideClick() {
-  displays.overlay.classList.remove("active")
+function handleOverlayOutsideClick(e) {
+  if (e.target === displays.overlay) {
+    displays.overlay.classList.remove("active")
+  }
 }
 
 async function handleFolderRead() {
@@ -72,7 +77,7 @@ buttons.run.addEventListener("click", handleFolderWrite);
 buttons.sourceOpts.addEventListener("click", handleSourceOptions)
 
 displays.overlay.addEventListener("click", handleOverlayOutsideClick)
-document.querySelector(".dialog-container").addEventListener("click", e => e.stopPropagation())
+// document.querySelector(".dialog-container").addEventListener("click", e => e.stopPropagation())
 
 const svgElement = document.createElement("div");
 svgElement.innerHTML = iconGear;

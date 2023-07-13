@@ -25,7 +25,11 @@ const displays = {
 } 
 
 function handleSourceOptions() {
-  modals.displayDialog()
+  modals.displayDialog("sourceSettings")
+  // displays.overlay.classList.add("active")
+}
+function handleTargetOptions() {
+  modals.displayDialog("targetSettings")
   // displays.overlay.classList.add("active")
 }
 
@@ -75,6 +79,7 @@ buttons.source.addEventListener("click", handleFolderRead);
 buttons.target.addEventListener("click", handleFolderTarget);
 buttons.run.addEventListener("click", handleFolderWrite);
 buttons.sourceOpts.addEventListener("click", handleSourceOptions)
+buttons.targetOpts.addEventListener("click", handleTargetOptions)
 
 displays.overlay.addEventListener("click", handleOverlayOutsideClick)
 // document.querySelector(".dialog-container").addEventListener("click", e => e.stopPropagation())

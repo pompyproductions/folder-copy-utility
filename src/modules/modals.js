@@ -9,7 +9,7 @@ const makeCloseButton = () => {
 
 const makeCheckboxGroup = (name, label) => {
   return domalt.newElem({
-    class: "checkbox-group",
+    class: "input-pair",
     children: [
       { tag: "input", attributes: [["type", "checkbox"], ["name", name], ["id", name]] },
       { tag: "label", content: label, attributes: [["for", name]] }
@@ -17,10 +17,19 @@ const makeCheckboxGroup = (name, label) => {
   })
 }
 
+const makeRadioGroup = (name, value, label) => {
+  return domalt.newElem({
+    class: "input-pair",
+    children: [
+      { tag: "input", attributes: [["type", "radio"], ["name", name], ["id", value]] },
+      { tag: "label", content: label, attributes: [["for", value]] }
+    ]
+  })
+}
+
 const overlay = document.querySelector(".dialog-overlay")
 const templates = {
   sourceSettings: {
-    tag: "div",
     class: "dialog-container",
     children: [
       {
@@ -33,23 +42,38 @@ const templates = {
         children: [
           makeCheckboxGroup("include-files", "Include files (slower)"),
           makeCheckboxGroup("recursive", "Include subfolders (recursive)"),
+
         ]
       },
     ],
   },
+  targetSettings: {
+    class: "dialog-container",
+    children: [
+      {
+        tag: "h2",
+        content: "Settings: Target folder",
+      },
+      makeCloseButton(),
+      {
+        class: "dialog-content",
+        children: [
+          makeRadioGroup("existing", "skip", "Skip existing files"),
+          makeRadioGroup("existing", "overwrite", "Overwrite existing files"),
+          makeRadioGroup("existing", "clear", "Delete all existing files/folders")
+        ]
+      },
+    ],
+  }
 };
 
 function toggleOverlay() {
-  overlay.replaceChildren();
-  overlay.append(domalt.newElem(templates.sourceSettings));
   overlay.classList.toggle("active");
 }
 
 function displayDialog(name) {
-  // switch (name) {
-  //   case "sourceSettings":
-      
-  // }
+  overlay.replaceChildren();
+  overlay.append(domalt.newElem(templates[name]));
   toggleOverlay();
 }
 

@@ -74,6 +74,7 @@ aside .list-display {
 }
 
 .dialog-overlay {
+  z-index: 1;
   position: absolute;
   inset: 0;
   display: flex;
@@ -126,13 +127,13 @@ aside .list-display {
   }
 }
 
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
   cursor: pointer;
   appearance: none;
   position: relative;
   width: 1.2em;
   height: 1.2em;
-  border-radius: 0.2em;
   background-color: #313738;
   transition: background-color 0.1s;
 
@@ -150,5 +151,16 @@ input[type="checkbox"] {
     &::before {
       opacity: 1;
     }
+  }
+}
+
+input[type="checkbox"] {
+  border-radius: 0.2em;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+  &::before {
+    border-radius: 50%;
   }
 }

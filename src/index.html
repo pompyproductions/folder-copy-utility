@@ -14,26 +14,33 @@
     <header>
       <h1>FLEM</h1>
       <div class="dirpath-select">
-        <button class="side-button cog" id="source-folder-opts"></button>
+        <button class="side-button" data-icon="settings" id="source-folder-opts"></button>
         <button id="source-folder">Source folder:</button>
         <p class="line-display" id="source-path">no folder selected</p>
       </div>
       <div class="dirpath-select">
-        <button class="side-button cog" id="target-folder-opts"></button>
+        <button class="side-button" data-icon="settings" id="target-folder-opts"></button>
         <button id="target-folder">Target folder:</button>
         <p class="line-display" id="target-path">no folder selected</p>
       </div>
     </header>
     <main>
+      <div class="list-header">
+        <p class="hover-info hidden"></p>
+        <button data-icon="expand"></button>
+        <button data-icon="refresh"></button>
+      </div>
       <ul class="list-display" id="source-contents">
       </ul>
+      <p class="line-display"></p>
     </main>
     <aside>
-      <div class="checkbox-container">
-        <input type="checkbox" name="filetype-checkbox" id="filetype-checkbox">
-        <label for="filetype-checkbox">Include files</label>
+      <div class="list-header">
+        <p class="hover-info"></p>
+        <button data-icon="asterisk"></button>
       </div>
-      <ul class="list-display" id="filetypes"></ul>
+      <ul class="list-display" id="filetypes">
+      </ul>
       <div class="controls">
         <button id="run">Run FLEM</button>
         <!-- <button id="save">Save settings</button> -->

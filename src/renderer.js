@@ -4,6 +4,13 @@ import filetypeDisplay from "./modules/filetypeDisplay";
 import domalt from "domalt";
 import modals from "./modules/modals";
 
+const icons = {
+  settings: require("./svg/gear-solid.svg"),
+  refresh: require("./svg/arrows-rotate-solid.svg"),
+  expand: require("./svg/folder-tree-solid.svg"),
+  close: require("./svg/xmark-solid.svg"),
+  asterisk: require("./svg/asterisk-solid.svg")
+}
 const iconGear = require("./svg/gear-solid.svg")
 const dirents = [];
 let targetDir;
@@ -87,8 +94,44 @@ displays.overlay.addEventListener("click", handleOverlayOutsideClick)
 const svgElement = document.createElement("div");
 svgElement.innerHTML = iconGear;
 
-document.querySelectorAll("button.cog").forEach(e => {
+// document.querySelectorAll("button.cog").forEach(e => {
+//   const elem = document.createElement("div");
+//   elem.innerHTML = iconGear;
+//   e.appendChild(elem.children[0]);
+// })
+
+
+
+// encapsulate/separate this part better, make it scalable:
+
+document.querySelectorAll("[data-icon]").forEach(e => {
   const elem = document.createElement("div");
-  elem.innerHTML = iconGear;
+  elem.innerHTML = icons[e.getAttribute("data-icon")];
   e.appendChild(elem.children[0]);
+})
+
+const infos = {
+  expand: "Collapse/expand all items",
+  refresh: "Refresh folder contents",
+}
+
+const dirDisplayHeader = document.querySelector("main .list-header");
+let timeoutID;
+const displayInfo = (e) => {
+  const info = infos[e.target.getAttribute("data-icon")];
+  dirDisplayHeader.querySelector("p").textContent = info;
+  dirDisplayHeader.querySelector("p").classList.remove("hidden");
+  if (timeoutID) clearTimeout(timeoutID);
+  timeoutID = setTimeout(hideOnTimeout, 2000);
+  dirDisplayHeader.querySelector("p").classList.add("active");
+}
+const hideInfo = () => {
+  dirDisplayHeader.querySelector("p").classList.remove("active")
+}
+const hideOnTimeout = () => {
+  dirDisplayHeader.querySelector("p").classList.add("hidden")
+}
+dirDisplayHeader.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("mouseenter", displayInfo);
+  btn.addEventListener("mouseleave", hideInfo)
 })

@@ -17,14 +17,21 @@ body {
 
 main, header, footer {
   display: grid;
-  gap: .2rem;
+  // gap: .2rem;
   // max-width: 100%;
   min-width: 0;
   min-height: 0;
 }
 
+main {
+  grid-area: main;
+  grid-template-rows: min-content 1fr;
+  // gap: 4px;
+}
+
 header {
   grid-area: header;
+  gap: .2rem;
   h1 {
     font-size: 3rem;
     font-weight: 600;

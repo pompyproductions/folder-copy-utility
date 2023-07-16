@@ -1,5 +1,27 @@
 import domalt from "domalt";
-const display = document.getElementById("filetypes")
+const display = document.getElementById("filetypes");
+const header = document.querySelector("aside .list-header");
+const tooltips = {
+  swap: "Swap",
+  asterisk: "Select all",
+}
+let timeoutID;
+
+const handleTooltipEnter = (e) => {
+  const text = tooltips[e.target.getAttribute("data-icon")];
+  const tooltipDisplay = header.querySelector("p");
+  tooltipDisplay.textContent = text;
+  tooltipDisplay.classList.remove("hidden");
+  if (timeoutID) clearTimeout(timeoutID);
+  timeoutID = setTimeout(handleTooltipTimeout, 2000);
+  tooltipDisplay.classList.add("active");
+}
+const handleTooltipLeave = (e) => {
+  header.querySelector("p").classList.remove("active");
+}
+const handleTooltipTimeout = (e) => {
+  header.querySelector("p").classList.add("hidden");
+}
 
 const mergeSets = (target, source) => {
   if (!source) return target; // can continue looping
@@ -35,5 +57,10 @@ const update = (dirents) => {
     }))
   }
 }
+
+header.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("mouseenter", handleTooltipEnter);
+  btn.addEventListener("mouseleave", handleTooltipLeave);
+})
 
 export default { update };

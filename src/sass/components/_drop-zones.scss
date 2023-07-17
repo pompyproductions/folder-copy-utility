@@ -1,0 +1,21 @@
+.drop-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #4b96a3;
+  pointer-events: none;
+  opacity: 0;
+  display: flex;
+  gap: 2rem;
+  padding: 3rem;
+  transition: opacity 0.12s;
+  // z-index: -15;
+  &.active {
+    opacity: .9;
+    pointer-events: all;
+  }
+  div {
+    flex: 1;
+    border: 2px dashed rgb(55 83 92 / 67%);
+    border-radius: 2rem;
+  }
+}

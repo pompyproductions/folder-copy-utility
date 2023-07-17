@@ -1,6 +1,7 @@
 import "./sass/styles.scss";
 import dirDisplay from "./modules/dirDisplay";
 import filetypeDisplay from "./modules/filetypeDisplay";
+import fileDrop from "./modules/fileDrop";
 import domalt from "domalt";
 import modals from "./modules/modals";
 
@@ -12,8 +13,6 @@ const icons = {
   asterisk: require("./svg/asterisk-solid.svg"),
   swap: require("./svg/right-left-solid.svg")
 }
-const dirents = [];
-let targetDir;
 
 const buttons = {
   source: document.getElementById("source-folder"),
@@ -30,6 +29,15 @@ const displays = {
   filetypes: document.getElementById("filetypes"),
   overlay: document.querySelector(".dialog-overlay")
 } 
+
+const dirents = [];
+let targetDir;
+let isDragActive = false;
+
+function handleFileDrop(e) {
+  e.preventDefault();
+  console.log(e.dataTransfer.files[0].path)
+}
 
 function handleSourceOptions() {
   modals.displayDialog("sourceSettings")
@@ -88,7 +96,39 @@ buttons.run.addEventListener("click", handleFolderWrite);
 buttons.sourceOpts.addEventListener("click", handleSourceOptions)
 buttons.targetOpts.addEventListener("click", handleTargetOptions)
 
-displays.overlay.addEventListener("click", handleOverlayOutsideClick)
+displays.overlay.addEventListener("click", handleOverlayOutsideClick);
+// document.querySelector(".drop-overlay").addEventListener("drop", handleFileDrop);
+// document.querySelector(".drop-overlay").addEventListener("dragover", (e) => e.preventDefault());
+window.addEventListener("dragenter", (e) => {
+  if (!isDragActive && e.dataTransfer && e.dataTransfer.types.indexOf("Files") !== -1) {
+    fileDrop.activate();
+    console.log("dragging!")
+  }
+  // e.preventDefault();
+  // console.log("hey");
+  // e.stopPropagation();
+});
+// window.addEventListener("dragend", (e) => {
+//   if (isDragActive) {
+//     isDragActive = false;
+//     console.log("end drag!")
+//     document.querySelector("body").style.background = ""
+//   }
+// })
+// window.addEventListener("drop", (e) => {
+//   if (isDragActive) {
+//     isDragActive = false;
+//     console.log("end drag!")
+//     document.querySelector("body").style.background = ""
+//   }
+// })
+
+// window.addEventListener("dragleave", (e) => {
+//   // e.preventDefault();
+//   e.stopPropagation();
+//   console.log("ho");
+//   document.querySelector("body").style.background = ""
+// })
 
 document.querySelectorAll("[data-icon]").forEach(e => {
   const elem = document.createElement("div");

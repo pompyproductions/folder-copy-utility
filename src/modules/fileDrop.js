@@ -2,7 +2,6 @@ const overlay = document.querySelector(".drop-overlay");
 const zones = {
   source: document.getElementById("drop-source"),
   target: document.getElementById("drop-target"),
-  cancel: document.getElementById("drop-cancel"),
 }
 
 const handleDragEnd = (e) => {
@@ -38,4 +37,4 @@ for (let key of Object.keys(zones)) {
 
 // overlay.addEventListener("drop", handleDragEnd);
 
-export default { activate };
+export default { activate, deactivate };

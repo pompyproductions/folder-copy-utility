@@ -10,15 +10,16 @@
   padding: 3rem;
   transition: opacity 0.12s;
   // z-index: -15;
-  * {
-    pointer-events: none;
-  }
   &.active {
     opacity: .9;
-    // pointer-events: all;
   }
   .drop-zone {
     border: 2px dashed rgb(55 83 92 / 67%);
     border-radius: 2rem;
+    margin: 6rem 0;
+    &:hover {
+      background-color: white;
+      border-color: white;
+    }
   }
 }

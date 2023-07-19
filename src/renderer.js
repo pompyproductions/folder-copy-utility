@@ -32,7 +32,6 @@ const displays = {
 
 const dirents = [];
 let targetDir;
-let isDragActive = false;
 
 function handleFileDrop(e) {
   e.preventDefault();
@@ -99,36 +98,33 @@ buttons.targetOpts.addEventListener("click", handleTargetOptions)
 displays.overlay.addEventListener("click", handleOverlayOutsideClick);
 // document.querySelector(".drop-overlay").addEventListener("drop", handleFileDrop);
 // document.querySelector(".drop-overlay").addEventListener("dragover", (e) => e.preventDefault());
+
+let dragCounter = 0;
+let isDragActive;
 window.addEventListener("dragenter", (e) => {
   if (!isDragActive && e.dataTransfer && e.dataTransfer.types.indexOf("Files") !== -1) {
     fileDrop.activate();
-    console.log("dragging!")
+    isDragActive = true;
   }
-  // e.preventDefault();
-  // console.log("hey");
-  // e.stopPropagation();
+  dragCounter++;
 });
-// window.addEventListener("dragend", (e) => {
-//   if (isDragActive) {
-//     isDragActive = false;
-//     console.log("end drag!")
-//     document.querySelector("body").style.background = ""
-//   }
-// })
-// window.addEventListener("drop", (e) => {
-//   if (isDragActive) {
-//     isDragActive = false;
-//     console.log("end drag!")
-//     document.querySelector("body").style.background = ""
-//   }
-// })
-
-// window.addEventListener("dragleave", (e) => {
-//   // e.preventDefault();
-//   e.stopPropagation();
-//   console.log("ho");
-//   document.querySelector("body").style.background = ""
-// })
+window.addEventListener("dragleave", (e) => {
+  if (isDragActive) {
+    dragCounter--;
+  }
+  if (dragCounter === 0) {
+    fileDrop.deactivate();
+    isDragActive = false;
+  }
+})
+window.addEventListener("dragover", (e) => e.preventDefault())
+window.addEventListener("drop", (e) => {
+  if (isDragActive) {
+    dragCounter = 0;
+    fileDrop.deactivate();
+    isDragActive = false;
+  }
+})
 
 document.querySelectorAll("[data-icon]").forEach(e => {
   const elem = document.createElement("div");

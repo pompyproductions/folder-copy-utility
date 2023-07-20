@@ -105,16 +105,20 @@ window.addEventListener("dragenter", (e) => {
   if (!isDragActive && e.dataTransfer && e.dataTransfer.types.indexOf("Files") !== -1) {
     fileDrop.activate();
     isDragActive = true;
+    console.log("start");
   }
   dragCounter++;
+  console.log({dragCounter})
 });
 window.addEventListener("dragleave", (e) => {
   if (isDragActive) {
     dragCounter--;
+    console.log({dragCounter})
   }
   if (dragCounter === 0) {
     fileDrop.deactivate();
     isDragActive = false;
+    console.log("end");
   }
 })
 window.addEventListener("dragover", (e) => e.preventDefault())

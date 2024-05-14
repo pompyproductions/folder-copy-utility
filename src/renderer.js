@@ -74,6 +74,7 @@ async function handleFolderRead() {
     };
 
     dirDisplay.update(dirents);
+    console.log(dirents);
     // filetypeDisplay.update(dirents);
   }
 }

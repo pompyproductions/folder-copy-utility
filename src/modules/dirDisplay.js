@@ -30,16 +30,34 @@ const handleTooltipTimeout = (e) => {
 }
 
 // --
-// 
+// dirent click handler
+
+const handleDirentClick = (e) => {
+  if (e && e.stopPropagation) {
+    e.stopPropagation();
+  }
+  console.log(findDirentIndex(e.target).reverse());
+}
+
+const findDirentIndex = (elem) => {
+  var position = [];
+  if (elem.parentElement.classList.contains("dir")) {
+    position = position.concat(findDirentIndex(elem.parentElement))
+  }
+  position.push(Array.from(elem.parentElement.children).indexOf(elem));
+  return position
+}
+
+// const getDirentAt = (pos) => {
+
+// }
+
 
 const newElemDirent = (dirent, indent = 0) => {
   const elem = domalt.newElem({
     class: "dirent",
-    // listeners: [["click", (e) => console.log("click on dirent!")]],
+    listeners: [["click", handleDirentClick]],
     content: `${'⸺'.repeat(indent)}${indent ? "\xa0" : ""}${dirent.name}`,
-    // style: {
-    //   "margin-left": `${indent * 12}px`,
-    //  }
   });
   if (dirent.isDir) {
     elem.classList.add("dir");

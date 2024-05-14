@@ -1,10 +1,20 @@
 const path = require("path");
 const fs = require("fs");
 
+// --
+// enums
+
+const DIRENT_STATES = Object.freeze({
+  "ACTIVE": 0,
+  "CHILDREN_DISABLED": 1,
+  "DISABLED": 2
+})
+
 function getFolderStructure(dirpath, name = "root", options = { getFiles: false }) {
   const result = {
     name,
     isDir: true,
+    state: DIRENT_STATES.ACTIVE,
     fullPath: dirpath,
     children: [],
   };

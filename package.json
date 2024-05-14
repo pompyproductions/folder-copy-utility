@@ -37,7 +37,7 @@
     "svg-inline-loader": "^0.8.2"
   },
   "dependencies": {
-    "domalt": "^0.2.1",
+    "domalt": "^0.2.2",
     "electron-squirrel-startup": "^1.0.0"
   }
 }

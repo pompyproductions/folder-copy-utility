@@ -5,6 +5,9 @@ import fileDrop from "./modules/fileDrop";
 import domalt from "domalt";
 import modals from "./modules/modals";
 
+// --
+// references to ui elements
+
 const icons = {
   settings: require("./svg/gear-solid.svg"),
   refresh: require("./svg/arrows-rotate-solid.svg"),
@@ -30,8 +33,14 @@ const displays = {
   overlay: document.querySelector(".dialog-overlay")
 } 
 
+// --
+// current state variables
+
 const dirents = [];
 let targetDir;
+
+// --
+// ui action handlers
 
 function handleFileDrop(e) {
   e.preventDefault();
@@ -55,14 +64,17 @@ function handleOverlayOutsideClick(e) {
 
 async function handleFolderRead() {
   const sourceFolder = await window.API.openFile();
+  console.log(sourceFolder)
   if (sourceFolder && sourceFolder.children.length) {
     displays.source.textContent = sourceFolder.fullPath;
+
     dirents.length = 0;
     for (let dirent of sourceFolder.children) {
       dirents.push(dirent)
     };
+
     dirDisplay.update(dirents);
-    filetypeDisplay.update(dirents);
+    // filetypeDisplay.update(dirents);
   }
 }
 
@@ -87,8 +99,6 @@ async function handleFolderWrite() {
   // console.log(result);
 }
 
-
-
 buttons.source.addEventListener("click", handleFolderRead);
 buttons.target.addEventListener("click", handleFolderTarget);
 buttons.run.addEventListener("click", handleFolderWrite);
@@ -96,8 +106,24 @@ buttons.sourceOpts.addEventListener("click", handleSourceOptions)
 buttons.targetOpts.addEventListener("click", handleTargetOptions)
 
 displays.overlay.addEventListener("click", handleOverlayOutsideClick);
-// document.querySelector(".drop-overlay").addEventListener("drop", handleFileDrop);
-// document.querySelector(".drop-overlay").addEventListener("dragover", (e) => e.preventDefault());
+document.querySelector(".drop-overlay").addEventListener("drop", handleFileDrop);
+document.querySelector(".drop-overlay").addEventListener("dragover", (e) => e.preventDefault());
+
+
+// --
+// populate SVG icons
+
+document.querySelectorAll("[data-icon]").forEach(e => {
+  const elem = document.createElement("div");
+  elem.innerHTML = icons[e.getAttribute("data-icon")];
+  e.appendChild(elem.children[0]);
+})
+
+// --
+// drag and drop functionality
+
+// counts the number of nested elements over which the cursor is being dragged
+// so it shuts down on 0
 
 let dragCounter = 0;
 let isDragActive;
@@ -128,10 +154,4 @@ window.addEventListener("drop", (e) => {
     fileDrop.deactivate();
     isDragActive = false;
   }
-})
-
-document.querySelectorAll("[data-icon]").forEach(e => {
-  const elem = document.createElement("div");
-  elem.innerHTML = icons[e.getAttribute("data-icon")];
-  e.appendChild(elem.children[0]);
 })

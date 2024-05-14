@@ -1,13 +1,18 @@
 import domalt from "domalt";
+
 const display = document.getElementById("dirents");
 const header = document.querySelector("main .list-header");
+
+
+// --
+// buttons and tooltips 
+
+let timeoutID;
 const tooltips = {
   expand: "Collapse/expand all items",
   refresh: "Refresh folder contents",
   swap: "Swap"
 }
-let timeoutID;
-
 const handleTooltipEnter = (e) => {
   const text = tooltips[e.target.getAttribute("data-icon")];
   const tooltipDisplay = header.querySelector("p");
@@ -24,16 +29,19 @@ const handleTooltipTimeout = (e) => {
   header.querySelector("p").classList.add("hidden");
 }
 
+// --
+// 
+
 const newElemDirent = (dirent, indent = 0) => {
   const elem = domalt.newElem({
     class: "dirent",
-    listeners: [["click", (e) => console.log("click on dirent!")]],
+    // listeners: [["click", (e) => console.log("click on dirent!")]],
     content: dirent.name,
     style: {
       "margin-left": `${indent * 12}px`,
      }
   });
-  if (dirent.isDir && dirent.children.length) {
+  if (dirent.isDir) {
     elem.classList.add("dir");
     indent++;
     for (let child of dirent.children) {

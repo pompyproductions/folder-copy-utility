@@ -53,9 +53,14 @@ const createWindow = () => {
   if (isDev) mainWindow.webContents.openDevTools();
 };
 
+
+// ---
+// find these bindings in preload.js
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app.on('ready', () => {
   ipcMain.handle("openFile", handleFileOpen);
   ipcMain.handle("selectTarget", handleSelectTarget);

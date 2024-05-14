@@ -36,10 +36,10 @@ const newElemDirent = (dirent, indent = 0) => {
   const elem = domalt.newElem({
     class: "dirent",
     // listeners: [["click", (e) => console.log("click on dirent!")]],
-    content: dirent.name,
-    style: {
-      "margin-left": `${indent * 12}px`,
-     }
+    content: `${'⸺'.repeat(indent)}${indent ? "\xa0" : ""}${dirent.name}`,
+    // style: {
+    //   "margin-left": `${indent * 12}px`,
+    //  }
   });
   if (dirent.isDir) {
     elem.classList.add("dir");

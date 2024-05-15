@@ -40,6 +40,29 @@ const dirents = [];
 let targetDir;
 
 // --
+// dirent click handler
+
+const handleDirentClick = (e) => {
+  if (e && e.stopPropagation) {
+    e.stopPropagation();
+  }
+  console.log(findDirentIndex(e.target).reverse());
+}
+
+const findDirentIndex = (elem) => {
+  var position = [];
+  if (elem.parentElement.classList.contains("dir")) {
+    position = position.concat(findDirentIndex(elem.parentElement))
+  }
+  position.push(Array.from(elem.parentElement.children).indexOf(elem));
+  return position
+}
+
+const getDirentAt = (pos) => {
+  
+}
+
+// --
 // ui action handlers
 
 function handleFileDrop(e) {
@@ -74,6 +97,12 @@ async function handleFolderRead() {
     };
 
     dirDisplay.update(dirents);
+    // the following is a bit overkill, since clicking the parent actually works.
+    // consider adding the event listener to the display itself...
+    Array.from(displays.dirs.children).forEach((elem) => {
+      elem.addEventListener("click", handleDirentClick)
+    }) 
+    
     console.log(dirents);
     // filetypeDisplay.update(dirents);
   }
@@ -109,6 +138,7 @@ buttons.targetOpts.addEventListener("click", handleTargetOptions)
 displays.overlay.addEventListener("click", handleOverlayOutsideClick);
 document.querySelector(".drop-overlay").addEventListener("drop", handleFileDrop);
 document.querySelector(".drop-overlay").addEventListener("dragover", (e) => e.preventDefault());
+
 
 
 // --

@@ -1,6 +1,6 @@
 import domalt from "domalt";
 
-const display = document.getElementById("dirents");
+const display = document.getElementById("source-contents");
 const header = document.querySelector("main .list-header");
 
 
@@ -29,34 +29,10 @@ const handleTooltipTimeout = (e) => {
   header.querySelector("p").classList.add("hidden");
 }
 
-// --
-// dirent click handler
-
-const handleDirentClick = (e) => {
-  if (e && e.stopPropagation) {
-    e.stopPropagation();
-  }
-  console.log(findDirentIndex(e.target).reverse());
-}
-
-const findDirentIndex = (elem) => {
-  var position = [];
-  if (elem.parentElement.classList.contains("dir")) {
-    position = position.concat(findDirentIndex(elem.parentElement))
-  }
-  position.push(Array.from(elem.parentElement.children).indexOf(elem));
-  return position
-}
-
-// const getDirentAt = (pos) => {
-
-// }
-
-
 const newElemDirent = (dirent, indent = 0) => {
   const elem = domalt.newElem({
     class: "dirent",
-    listeners: [["click", handleDirentClick]],
+    // listeners: [["click", handleDirentClick]],
     content: `${'⸺'.repeat(indent)}${indent ? "\xa0" : ""}${dirent.name}`,
   });
   if (dirent.isDir) {

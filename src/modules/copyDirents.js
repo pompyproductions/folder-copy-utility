@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const enums = require("./enums");
 
 const copyDirentRecursive = (targetPath, dirent, excludes = []) => {
   // for (let dirent of dirents) {
@@ -15,11 +16,16 @@ const copyDirentRecursive = (targetPath, dirent, excludes = []) => {
   //     fs.copyFileSync(dirent.fullPath, newPath)
   //   }
   // }
+
+  // && dirent.state != enums.DIRENT_STATES.DISABLED
   const filePath = path.join(targetPath, dirent.name);
   if (dirent.isDir) {
-    if (!fs.existsSync(filePath)) fs.mkdirSync(filePath);
-    for (let child of dirent.children) {
-      copyDirentRecursive(filePath, child, excludes)
+    if (dirent.state != enums.DIRENT_STATES.DISABLED) {
+      console.log(enums.DIRENT_STATES.DISABLED)
+      if (!fs.existsSync(filePath)) fs.mkdirSync(filePath);
+      for (let child of dirent.children) {
+        copyDirentRecursive(filePath, child, excludes)
+      }
     }
   } else {
     // check for excludes here

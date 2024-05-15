@@ -78,9 +78,28 @@ const getDirentAt = (pos) => {
 // --
 // ui action handlers
 
-function handleFileDrop(e) {
+async function handleFileDrop(e) {
   e.preventDefault();
   console.log(e.dataTransfer.files[0].path)
+  const sourceFolder = await window.API.dropFile(e.dataTransfer.files[0].path);
+  if (sourceFolder && sourceFolder.children.length) {
+    displays.source.textContent = sourceFolder.fullPath;
+
+    dirents.length = 0;
+    for (let dirent of sourceFolder.children) {
+      dirents.push(dirent)
+    };
+    dirDisplay.update(dirents);
+
+    // the following is a bit overkill, since clicking the parent actually works.
+    // consider adding the event listener to the display itself...
+    Array.from(displays.dirs.children).forEach((elem) => {
+      elem.addEventListener("click", handleDirentClick)
+    }) 
+    
+    console.log(dirents);
+    // filetypeDisplay.update(dirents);
+  }
 }
 
 function handleSourceOptions() {

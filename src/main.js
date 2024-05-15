@@ -20,6 +20,11 @@ async function handleFileOpen() {
   return false
 }
 
+async function handleFileDrop(event, filepath) {
+  // console.log(filepath)
+  return getFolderStructure(filepath)
+}
+
 async function handleSelectTarget() {
   const { canceled, filePaths } = await dialog.showOpenDialog({
     properties: ["openDirectory"]
@@ -42,7 +47,7 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     title: "Folder Viewer",
-    width: isDev ? 1200 : 800,
+    width: isDev ? 1500 : 1000,
     height: isDev ? 900 : 600,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -65,6 +70,7 @@ app.on('ready', () => {
   ipcMain.handle("openFile", handleFileOpen);
   ipcMain.handle("selectTarget", handleSelectTarget);
   ipcMain.handle("copyDirents", handleCopy);
+  ipcMain.handle("dropFile", handleFileDrop);
   createWindow();
 });
 

@@ -56,8 +56,9 @@
     @include disable-selection;
 
     &.hidden {
-      height: 0;
-      overflow: hidden;
+      // height: 0;
+      // overflow: hidden;
+      display: none;
     }
     &.dir {
       color: var(--mint);

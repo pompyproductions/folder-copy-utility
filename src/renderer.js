@@ -47,12 +47,11 @@ const handleDirentClick = (e) => {
   if (e && e.stopPropagation) {
     e.stopPropagation();
   }
-  const dirent = getDirentAt(
-    findDirentIndex(e.target)
-  )
-  dirent.state = enums.DIRENT_STATES.DISABLED;
-  e.target.classList.toggle("disabled")
-  console.log(dirent);
+  if (getDirentAt(findDirentIndex(e.target)).state == enums.DIRENT_STATES.ACTIVE) {
+    disableDirent(e.target)
+  } else {
+    activateDirent(e.target)
+  }
 }
 
 const findDirentIndex = (elem) => {
@@ -73,6 +72,30 @@ const getDirentAt = (pos) => {
     }
     return dirent
   }
+}
+
+const disableDirent = (elem) => {
+  const dirent = getDirentAt(
+    findDirentIndex(elem)
+  )
+  dirent.state = enums.DIRENT_STATES.DISABLED;
+  elem.classList.add("disabled")
+  for (let i = 0; i < elem.children.length; i++) {
+    elem.children[i].classList.add("hidden")
+  }
+  console.log(dirent);
+}
+
+const activateDirent = (elem) => {
+  const dirent = getDirentAt(
+    findDirentIndex(elem)
+  )
+  dirent.state = enums.DIRENT_STATES.ACTIVE;
+  elem.classList.remove("disabled")
+  for (let i = 0; i < elem.children.length; i++) {
+    elem.children[i].classList.remove("hidden")
+  }
+  console.log(dirent);
 }
 
 // --

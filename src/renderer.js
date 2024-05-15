@@ -50,7 +50,8 @@ const handleDirentClick = (e) => {
   const dirent = getDirentAt(
     findDirentIndex(e.target)
   )
-  dirent.state = enums.DIRENT_STATES.DISABLED
+  dirent.state = enums.DIRENT_STATES.DISABLED;
+  e.target.classList.toggle("disabled")
   console.log(dirent);
 }
 

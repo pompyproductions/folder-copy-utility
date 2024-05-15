@@ -55,11 +55,11 @@
     color: var(--dark-blue);
     @include disable-selection;
 
-    &.hidden {
-      // height: 0;
-      // overflow: hidden;
-      display: none;
-    }
+    // &.hidden {
+    //   // height: 0;
+    //   // overflow: hidden;
+    //   display: none;
+    // }
     &.dir {
       color: var(--mint);
       // cursor: pointer;
@@ -70,6 +70,9 @@
     &.disabled {
       // text-decoration: #5b8d9930 line-through;
       color: var(--dark-blue);
+      & > .dirent {
+        display: none;
+      }
     }
     &:hover {
       cursor: pointer;

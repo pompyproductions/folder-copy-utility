@@ -10,7 +10,7 @@ const DIRENT_STATES = Object.freeze({
   "DISABLED": 2
 })
 
-function getFolderStructure(dirpath, name = "root", options = { getFiles: false }) {
+function getFolderStructure(dirpath, name = "root", options = { getFiles: true }) {
   const result = {
     name,
     isDir: true,

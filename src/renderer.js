@@ -46,7 +46,10 @@ const handleDirentClick = (e) => {
   if (e && e.stopPropagation) {
     e.stopPropagation();
   }
-  console.log(findDirentIndex(e.target).reverse());
+  const dirent = getDirentAt(
+    findDirentIndex(e.target)
+  )
+  console.log(dirent);
 }
 
 const findDirentIndex = (elem) => {
@@ -59,7 +62,14 @@ const findDirentIndex = (elem) => {
 }
 
 const getDirentAt = (pos) => {
-  
+  if (pos.length) {
+    pos = pos.reverse();
+    let dirent = dirents[pos.pop()];
+    while (pos.length) {
+      dirent = dirent.children[pos.pop()]
+    }
+    return dirent
+  }
 }
 
 // --
@@ -87,7 +97,6 @@ function handleOverlayOutsideClick(e) {
 
 async function handleFolderRead() {
   const sourceFolder = await window.API.openFile();
-  console.log(sourceFolder)
   if (sourceFolder && sourceFolder.children.length) {
     displays.source.textContent = sourceFolder.fullPath;
 
@@ -95,8 +104,8 @@ async function handleFolderRead() {
     for (let dirent of sourceFolder.children) {
       dirents.push(dirent)
     };
-
     dirDisplay.update(dirents);
+
     // the following is a bit overkill, since clicking the parent actually works.
     // consider adding the event listener to the display itself...
     Array.from(displays.dirs.children).forEach((elem) => {

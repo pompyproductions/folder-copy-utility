@@ -47,11 +47,25 @@ const handleDirentClick = (e) => {
   if (e && e.stopPropagation) {
     e.stopPropagation();
   }
-  if (getDirentAt(findDirentIndex(e.target)).state == enums.DIRENT_STATES.ACTIVE) {
-    disableDirent(e.target)
-  } else {
-    activateDirent(e.target)
+  // if (getDirentAt(findDirentIndex(e.target.parentElement)).state == enums.DIRENT_STATES.DISABLED) return;
+  let targetState;
+
+  switch (getDirentAt(findDirentIndex(e.target)).state) {
+    case enums.DIRENT_STATES.DISABLED:
+      targetState = enums.DIRENT_STATES.ACTIVE;
+      break;
+    case enums.DIRENT_STATES.CHILDREN_DISABLED:
+      targetState = enums.DIRENT_STATES.DISABLED;
+      break;
+    case enums.DIRENT_STATES.ACTIVE:
+      if (e.target.children.length) {
+        targetState = enums.DIRENT_STATES.CHILDREN_DISABLED;
+      } else {
+        targetState = enums.DIRENT_STATES.DISABLED;
+      }
+      break;
   }
+  changeDirentState(e.target, targetState);
 }
 
 const findDirentIndex = (elem) => {
@@ -74,29 +88,55 @@ const getDirentAt = (pos) => {
   }
 }
 
-const disableDirent = (elem) => {
+const changeDirentState = (elem, state, affectChildren = true) => {
+  switch (state) {
+    case enums.DIRENT_STATES.DISABLED:
+      elem.classList.add("disabled");
+      break;
+    case enums.DIRENT_STATES.CHILDREN_DISABLED:
+      elem.classList.remove("disabled");
+      for (let i = 0; i < elem.children.length; i++) {
+        changeDirentState(elem.children[i], enums.DIRENT_STATES.DISABLED);
+      }
+      break;
+    case enums.DIRENT_STATES.ACTIVE:
+      elem.classList.remove("disabled");
+      if (getDirentAt(findDirentIndex(elem.parentElement)).state == enums.DIRENT_STATES.CHILDREN_DISABLED) {
+        changeDirentState(elem.parentElement, enums.DIRENT_STATES.ACTIVE, false)
+      }
+      if (affectChildren) {
+        for (let i = 0; i < elem.children.length; i++) {
+          changeDirentState(elem.children[i], enums.DIRENT_STATES.ACTIVE);
+        }
+      }
+      break;
+  }
   const dirent = getDirentAt(
     findDirentIndex(elem)
   )
-  dirent.state = enums.DIRENT_STATES.DISABLED;
-  elem.classList.add("disabled")
-  for (let i = 0; i < elem.children.length; i++) {
-    elem.children[i].classList.add("hidden")
-  }
-  console.log(dirent);
+  dirent.state = state;
+  // console.log(dirent)
 }
 
-const activateDirent = (elem) => {
-  const dirent = getDirentAt(
-    findDirentIndex(elem)
-  )
-  dirent.state = enums.DIRENT_STATES.ACTIVE;
-  elem.classList.remove("disabled")
-  for (let i = 0; i < elem.children.length; i++) {
-    elem.children[i].classList.remove("hidden")
-  }
-  console.log(dirent);
-}
+// const disableDirent = (elem) => {
+//   const dirent = getDirentAt(
+//     findDirentIndex(elem)
+//   )
+//   console.log(dirent)
+//   dirent.state = enums.DIRENT_STATES.DISABLED;
+//   elem.classList.add("disabled")
+//   for (let i = 0; i < elem.children.length; i++) {
+//     elem.children[i].classList.add("hidden")
+//   }
+// }
+
+// const activateDirent = (elem) => {
+//   const dirent = getDirentAt(
+//     findDirentIndex(elem)
+//   )
+//   dirent.state = enums.DIRENT_STATES.ACTIVE;
+//   elem.classList.remove("disabled")
+// }
 
 // --
 // ui action handlers

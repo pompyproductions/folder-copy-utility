@@ -72,6 +72,7 @@
       color: var(--dark-blue);
       & > .dirent {
         display: none;
+        pointer-events: none;
       }
     }
     &:hover {

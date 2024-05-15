@@ -4,6 +4,7 @@ import filetypeDisplay from "./modules/filetypeDisplay";
 import fileDrop from "./modules/fileDrop";
 import domalt from "domalt";
 import modals from "./modules/modals";
+import enums from "./modules/enums";
 
 // --
 // references to ui elements
@@ -49,6 +50,7 @@ const handleDirentClick = (e) => {
   const dirent = getDirentAt(
     findDirentIndex(e.target)
   )
+  dirent.state = enums.DIRENT_STATES.DISABLED
   console.log(dirent);
 }
 

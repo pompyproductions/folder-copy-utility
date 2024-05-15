@@ -1,20 +1,12 @@
 const path = require("path");
 const fs = require("fs");
-
-// --
-// enums
-
-const DIRENT_STATES = Object.freeze({
-  "ACTIVE": 0,
-  "CHILDREN_DISABLED": 1,
-  "DISABLED": 2
-})
+const enums = require("./enums");
 
 function getFolderStructure(dirpath, name = "root", options = { getFiles: true }) {
   const result = {
     name,
     isDir: true,
-    state: DIRENT_STATES.ACTIVE,
+    state: enums.DIRENT_STATES.ACTIVE,
     fullPath: dirpath,
     children: [],
   };
@@ -31,6 +23,7 @@ function getFolderStructure(dirpath, name = "root", options = { getFiles: true }
         name: children[i].name,
         isDir: false,
         fullPath: newPath,
+        state: enums.DIRENT_STATES.DISABLED
       };
       const extension = childFile.name.match(/\.[^.]+$/);
       if (extension) childFile.filetype = extension[0];

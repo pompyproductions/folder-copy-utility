@@ -43,11 +43,12 @@ let targetDir;
 // --
 // dirent click handler
 
+// consider moving everything to a module
+
 const handleDirentClick = (e) => {
   if (e && e.stopPropagation) {
     e.stopPropagation();
   }
-  // if (getDirentAt(findDirentIndex(e.target.parentElement)).state == enums.DIRENT_STATES.DISABLED) return;
   let targetState;
 
   switch (getDirentAt(findDirentIndex(e.target)).state) {
@@ -100,6 +101,7 @@ const changeDirentState = (elem, state, affectChildren = true) => {
       }
       break;
     case enums.DIRENT_STATES.ACTIVE:
+      if (!getDirentAt(findDirentIndex(elem)).isDir) return;
       elem.classList.remove("disabled");
       if (getDirentAt(findDirentIndex(elem.parentElement)).state == enums.DIRENT_STATES.CHILDREN_DISABLED) {
         changeDirentState(elem.parentElement, enums.DIRENT_STATES.ACTIVE, false)
@@ -115,28 +117,7 @@ const changeDirentState = (elem, state, affectChildren = true) => {
     findDirentIndex(elem)
   )
   dirent.state = state;
-  // console.log(dirent)
 }
-
-// const disableDirent = (elem) => {
-//   const dirent = getDirentAt(
-//     findDirentIndex(elem)
-//   )
-//   console.log(dirent)
-//   dirent.state = enums.DIRENT_STATES.DISABLED;
-//   elem.classList.add("disabled")
-//   for (let i = 0; i < elem.children.length; i++) {
-//     elem.children[i].classList.add("hidden")
-//   }
-// }
-
-// const activateDirent = (elem) => {
-//   const dirent = getDirentAt(
-//     findDirentIndex(elem)
-//   )
-//   dirent.state = enums.DIRENT_STATES.ACTIVE;
-//   elem.classList.remove("disabled")
-// }
 
 // --
 // ui action handlers
@@ -167,11 +148,9 @@ async function handleFileDrop(e) {
 
 function handleSourceOptions() {
   modals.displayDialog("sourceSettings")
-  // displays.overlay.classList.add("active")
 }
 function handleTargetOptions() {
   modals.displayDialog("targetSettings")
-  // displays.overlay.classList.add("active")
 }
 
 function handleOverlayOutsideClick(e) {

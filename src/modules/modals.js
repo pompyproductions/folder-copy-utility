@@ -40,9 +40,9 @@ const templates = {
       {
         class: "dialog-content",
         children: [
-          makeCheckboxGroup("include-files", "Include files (slower)"),
-          makeCheckboxGroup("recursive", "Include subfolders (recursive)"),
-
+          // makeCheckboxGroup("include-files", "Include files (slower)"),
+          // makeCheckboxGroup("recursive", "Include subfolders (recursive)"),
+          { tag: "p", content: "Options are not available yet."}
         ]
       },
     ],
@@ -58,9 +58,11 @@ const templates = {
       {
         class: "dialog-content",
         children: [
-          makeRadioGroup("existing", "skip", "Skip existing files"),
-          makeRadioGroup("existing", "overwrite", "Overwrite existing files"),
-          makeRadioGroup("existing", "clear", "Delete all existing files/folders")
+          // makeRadioGroup("existing", "skip", "Skip existing files"),
+          // makeRadioGroup("existing", "overwrite", "Overwrite existing files"),
+          // makeRadioGroup("existing", "clear", "Delete all existing files/folders")
+          { tag: "p", content: "Options are not available yet."}
+
         ]
       },
     ],

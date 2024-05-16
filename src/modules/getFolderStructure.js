@@ -2,11 +2,11 @@ const path = require("path");
 const fs = require("fs");
 const enums = require("./enums");
 
-function getFolderStructure(dirpath, name = "root", options = { getFiles: false }) {
+function getFolderStructure(dirpath, name = "root", options = { getFiles: true }) {
   const result = {
     name,
     isDir: true,
-    state: enums.DIRENT_STATES.ACTIVE,
+    state: enums.DIRENT_STATES.CHILDREN_DISABLED,
     fullPath: dirpath,
     children: [],
   };
@@ -17,7 +17,10 @@ function getFolderStructure(dirpath, name = "root", options = { getFiles: false 
     const newPath = path.join(dirpath, children[i].name);
     if (children[i].isDirectory()) {
       result.children.push(getFolderStructure(newPath, children[i].name));
-    // }
+      // the following assumes that files are automatically disabled.
+      // consider changing it once you implement configuration 
+      result.state = enums.DIRENT_STATES.ACTIVE;
+
     } else if (options.getFiles && children[i].isFile()) {
       const childFile = {
         name: children[i].name,

@@ -17,13 +17,9 @@ const deactivate = () => {
   overlay.classList.remove("active");
 }
 
-const hello = () => {
-  console.log("hello");
-}
-
 // overlay.addEventListener("dragleave", handleDragEnd);
 overlay.addEventListener("dragover", (e) => {
-  e.preventDefault()
+  e.preventDefault();
 });
 // overlay.addEventListener("dragend", handleDragEnd);
 

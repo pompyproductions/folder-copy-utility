@@ -34,6 +34,11 @@ const displays = {
   overlay: document.querySelector(".dialog-overlay")
 } 
 
+const dropZones = {
+  source: document.getElementById("drop-source"),
+  target: document.getElementById("drop-target"),
+}
+
 // --
 // current state variables
 
@@ -123,25 +128,38 @@ const changeDirentState = (elem, state, affectChildren = true) => {
 
 async function handleFileDrop(e) {
   e.preventDefault();
+  console.log(e.target.id)
+  dragCounter = 0;
+  fileDrop.deactivate();
+  isDragActive = false;
+
   console.log(e.dataTransfer.files[0].path)
-  const sourceFolder = await window.API.dropFile(e.dataTransfer.files[0].path);
-  if (sourceFolder && sourceFolder.children.length) {
-    displays.source.textContent = sourceFolder.fullPath;
-
-    dirents.length = 0;
-    for (let dirent of sourceFolder.children) {
-      dirents.push(dirent)
-    };
-    dirDisplay.update(dirents);
-
-    // the following is a bit overkill, since clicking the parent actually works.
-    // consider adding the event listener to the display itself...
-    Array.from(displays.dirs.children).forEach((elem) => {
-      elem.addEventListener("click", handleDirentClick)
-    }) 
-    
-    console.log(dirents);
-    // filetypeDisplay.update(dirents);
+  
+  if (e.target.id === "drop-source") {
+    const sourceFolder = await window.API.dropFile(e.dataTransfer.files[0].path);
+    if (sourceFolder && sourceFolder.children.length) {
+      displays.source.textContent = sourceFolder.fullPath;
+  
+      dirents.length = 0;
+      for (let dirent of sourceFolder.children) {
+        dirents.push(dirent)
+      };
+      dirDisplay.update(dirents);
+  
+      // the following is a bit overkill, since clicking the parent actually works.
+      // consider adding the event listener to the display itself...
+      Array.from(displays.dirs.children).forEach((elem) => {
+        elem.addEventListener("click", handleDirentClick)
+      }) 
+      console.log(dirents);
+      // filetypeDisplay.update(dirents);
+    }
+  } else if (e.target.id = "drop-target") {
+    const targetFolder = await window.API.dropFile(e.dataTransfer.files[0].path);
+    if (targetFolder) {
+      displays.target.textContent = targetFolder.fullPath;
+      targetDir = targetFolder.fullPath;
+    }
   }
 }
 
@@ -208,9 +226,9 @@ buttons.sourceOpts.addEventListener("click", handleSourceOptions)
 buttons.targetOpts.addEventListener("click", handleTargetOptions)
 
 displays.overlay.addEventListener("click", handleOverlayOutsideClick);
-document.querySelector(".drop-overlay").addEventListener("drop", handleFileDrop);
-document.querySelector(".drop-overlay").addEventListener("dragover", (e) => e.preventDefault());
-
+for (let key of Object.keys(dropZones)) {
+  dropZones[key].addEventListener("drop", handleFileDrop)
+}
 
 
 // --
@@ -253,8 +271,12 @@ window.addEventListener("dragleave", (e) => {
 window.addEventListener("dragover", (e) => e.preventDefault())
 window.addEventListener("drop", (e) => {
   if (isDragActive) {
-    dragCounter = 0;
+    dragCounter--;
+    console.log({dragCounter})
+  }
+  if (dragCounter === 0) {
     fileDrop.deactivate();
     isDragActive = false;
+    console.log("end");
   }
 })

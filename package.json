@@ -1,8 +1,8 @@
 {
-  "name": "04-foldercopy-forge",
-  "productName": "04-foldercopy-forge",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "name": "FLEM",
+  "productName": "FLEM",
+  "version": "0.1.0",
+  "description": "FLEM — Folder Copy utility for managing folder structures.",
   "main": ".webpack/main",
   "scripts": {
     "test": "jest --watch --verbose .*.test.js",
@@ -15,7 +15,7 @@
   "keywords": [],
   "author": {
     "name": "Eren Gazioglu",
-    "email": "pompyproduction@gmail.com"
+    "email": "hello@erengazioglu.com"
   },
   "license": "MIT",
   "devDependencies": {

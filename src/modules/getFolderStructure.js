@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const enums = require("./enums");
 
-function getFolderStructure(dirpath, name = "root", options = { getFiles: true }) {
+function getFolderStructure(dirpath, name = "root", options = { getFiles: false }) {
   const result = {
     name,
     isDir: true,

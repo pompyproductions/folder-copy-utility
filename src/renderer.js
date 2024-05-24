@@ -101,7 +101,6 @@ const changeDirentState = (elem, state, affectChildren = true) => {
       }
       break;
     case enums.DIRENT_STATES.ACTIVE:
-      if (!getDirentAt(findDirentIndex(elem)).isDir) return;
       elem.classList.remove("disabled");
       if (getDirentAt(findDirentIndex(elem.parentElement)).state == enums.DIRENT_STATES.CHILDREN_DISABLED) {
         changeDirentState(elem.parentElement, enums.DIRENT_STATES.ACTIVE, false)

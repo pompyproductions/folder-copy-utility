@@ -6,7 +6,6 @@ const copyDirentRecursive = require("./modules/copyDirents");
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
-let appWindow;
 
 async function handleFileOpen() {
   const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -42,14 +41,15 @@ async function handleCopy(event, filepath, dirents, excludes) {
 function handleWindowClose() {
   // appWindow.close()
   console.log("close")
+  BrowserWindow.getFocusedWindow().close()
 }
 
 function handleWindowExpand() {
-  // appWindow.maximize()
+  BrowserWindow.getFocusedWindow().maximize()
 }
 
 function handleWindowMinimize() {
-  // appWindow.minimize()
+  BrowserWindow.getFocusedWindow().minimize()
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -108,7 +108,7 @@ app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    appWindow = createWindow();
+    createWindow();
   }
 });
 

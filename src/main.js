@@ -76,7 +76,7 @@ const createWindow = () => {
     },
     titleBarStyle: "hidden",
     backgroundColor: "#191c1b",
-    icon: path.join(__dirname, 'icons/FLEM_WHITE-DARK-24px.png'),
+    icon: path.join(__dirname, 'icons/FLEM_48.ico'),
   });
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
@@ -84,7 +84,6 @@ const createWindow = () => {
 
   return mainWindow
 };
-
 
 // ---
 // find these bindings in preload.js

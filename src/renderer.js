@@ -254,7 +254,13 @@ titleButtons.expand.addEventListener("click", (e) => {
   window.API.toggleWindowExpand()
 })
 titleButtons.fullscreen.addEventListener("click", (e) => {
-  window.API.toggleWindowFullscreen()
+  window.API.toggleWindowFullscreen();
+  windowState.isFullscreen = !windowState.isFullscreen;
+  if (windowState.isFullscreen) {
+    titleButtons.expand.setAttribute("disabled", true)
+  } else {
+    titleButtons.expand.removeAttribute("disabled")
+  }
 })
 titleButtons.close.addEventListener("click", (e) => {
   window.API.closeWindow()

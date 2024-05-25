@@ -1,0 +1,65 @@
+// in the future, remove webkit app region and implement it in renderer/main processes
+// so that you can add pointer: grab and :hover color #80a2a740
+
+.title-bar {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  background: #80a2a730;
+  max-height: 2rem;
+  box-shadow: #00000014 0 1px 2px;
+  -webkit-user-select: none;
+  z-index: 10;
+  color: #dde0e1b5;
+
+  button {
+    min-width: 1rem;
+    background: #80a2a700;
+    color: #dde0e1b5;
+    border-bottom: none;
+    border-right: var(--bg) 1px solid;
+    white-space: nowrap;
+    &:hover {
+      background: #80a2a730;
+      color: var(--white);
+    }
+    &.title {
+      padding-left: 0;
+      padding-right: 0;
+      border: none;
+      font-weight: 400;
+      font-size: .85rem;
+
+      b {
+        font-weight: 800
+      }
+      &:hover {
+        background: #80a2a700;
+      }
+    }
+  }
+  .drag-area {
+    height: 100%;
+    -webkit-app-region: drag;
+    &.side {
+      width: 2rem;
+    }
+    &.center {
+      flex-grow: 1;
+    }
+  }
+  .buttons {
+    display: flex;
+    justify-content: end;
+  }
+  h2 {
+    font-weight: 400;
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover {
+      color: var(--white);
+    }
+  }
+
+}

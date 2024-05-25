@@ -46,12 +46,14 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    title: "Folder Viewer",
+    title: "FLEM",
     width: isDev ? 1500 : 1000,
     height: isDev ? 900 : 600,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
+    titleBarStyle: "hidden",
+    backgroundColor: "#191c1b",
   });
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

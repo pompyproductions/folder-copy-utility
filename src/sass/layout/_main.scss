@@ -1,5 +1,8 @@
-body {
+html {
   background-image: var(--black-gradient);
+}
+
+body {
   color: var(--white);
   font-family: "Sans";
   display: grid;
@@ -10,6 +13,7 @@ body {
     "main aside"
     "footer footer";
   padding: 2rem;
+  padding-top: 3rem;
   gap: 1rem;
   height: 100vh;
   overflow: hidden;

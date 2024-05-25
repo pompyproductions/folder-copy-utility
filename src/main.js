@@ -76,6 +76,7 @@ const createWindow = () => {
     },
     titleBarStyle: "hidden",
     backgroundColor: "#191c1b",
+    icon: path.join(__dirname, 'icons/FLEM_WHITE-DARK-24px.png'),
   });
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);

@@ -6,6 +6,7 @@ const copyDirentRecursive = require("./modules/copyDirents");
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
+let appWindow;
 
 async function handleFileOpen() {
   const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -38,6 +39,19 @@ async function handleCopy(event, filepath, dirents, excludes) {
   ))
 }
 
+function handleWindowClose() {
+  // appWindow.close()
+  console.log("close")
+}
+
+function handleWindowExpand() {
+  // appWindow.maximize()
+}
+
+function handleWindowMinimize() {
+  // appWindow.minimize()
+}
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -58,6 +72,8 @@ const createWindow = () => {
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   if (isDev) mainWindow.webContents.openDevTools();
+
+  return mainWindow
 };
 
 
@@ -73,6 +89,9 @@ app.on('ready', () => {
   ipcMain.handle("selectTarget", handleSelectTarget);
   ipcMain.handle("copyDirents", handleCopy);
   ipcMain.handle("dropFile", handleFileDrop);
+  ipcMain.handle("closeWindow", handleWindowClose);
+  ipcMain.handle("minimizeWindow", handleWindowMinimize);
+  ipcMain.handle("expandWindow", handleWindowExpand);
   createWindow();
 });
 
@@ -89,7 +108,7 @@ app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    appWindow = createWindow();
   }
 });
 

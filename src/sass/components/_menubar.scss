@@ -14,7 +14,7 @@
   color: #dde0e1b5;
 
   button {
-    min-width: 1rem;
+    min-width: 3rem;
     background: #80a2a700;
     color: #dde0e1b5;
     border-bottom: none;
@@ -37,6 +37,13 @@
       &:hover {
         background: #80a2a700;
       }
+    }
+    svg {
+      fill: #dde0e1b5;
+      width: .7rem;
+    }
+    &:hover svg {
+      fill: var(--white);
     }
   }
   .drag-area {

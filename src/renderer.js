@@ -15,7 +15,12 @@ const icons = {
   expand: require("./svg/folder-tree-solid.svg"),
   close: require("./svg/xmark-solid.svg"),
   asterisk: require("./svg/asterisk-solid.svg"),
-  swap: require("./svg/right-left-solid.svg")
+  swap: require("./svg/right-left-solid.svg"),
+  compress: require("./svg/down-left-and-up-right-to-center-solid.svg"),
+  expand: require("./svg/up-right-and-down-left-from-center-solid.svg"),
+  fullscreen: require("./svg/expand-solid.svg"),
+  windowed: require("./svg/compress-solid.svg"),
+  minimize: require("./svg/window-minimize-solid.svg")
 }
 
 const buttons = {
@@ -24,6 +29,12 @@ const buttons = {
   target: document.getElementById("target-folder"),
   targetOpts: document.getElementById("target-folder-opts"),
   run: document.getElementById("run"),
+}
+
+const titleButtons = {
+  minimize: document.querySelector(".title-bar #minimize"),
+  expand: document.querySelector(".title-bar #expand"),
+  close: document.querySelector(".title-bar #close")
 }
 
 const displays = {
@@ -230,6 +241,16 @@ for (let key of Object.keys(dropZones)) {
   dropZones[key].addEventListener("drop", handleFileDrop)
 }
 
+titleButtons.minimize.addEventListener("click", (e) => {
+  window.API.minimizeWindow()
+})
+titleButtons.expand.addEventListener("click", (e) => {
+  window.API.expandWindow()
+})
+titleButtons.close.addEventListener("click", (e) => {
+  window.API.closeWindow()
+})
+
 
 // --
 // populate SVG icons
@@ -280,3 +301,5 @@ window.addEventListener("drop", (e) => {
     console.log("end");
   }
 })
+
+console.log(titleButtons.close);

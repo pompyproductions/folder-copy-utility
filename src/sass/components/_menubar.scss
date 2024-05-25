@@ -45,6 +45,13 @@
     &:hover svg {
       fill: var(--white);
     }
+    &:disabled,
+    &[disabled] {
+      pointer-events: none;
+      &>svg {
+        fill: #dde0e130;
+      }
+    }
   }
   .drag-area {
     height: 100%;

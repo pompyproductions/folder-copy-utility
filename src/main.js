@@ -39,17 +39,25 @@ async function handleCopy(event, filepath, dirents, excludes) {
 }
 
 function handleWindowClose() {
-  // appWindow.close()
-  console.log("close")
   BrowserWindow.getFocusedWindow().close()
 }
 
 function handleWindowExpand() {
-  BrowserWindow.getFocusedWindow().maximize()
+  const win = BrowserWindow.getFocusedWindow();
+  if (win.isMaximized()) {
+    win.unmaximize()
+  } else {
+    win.maximize()
+  }
 }
 
 function handleWindowMinimize() {
   BrowserWindow.getFocusedWindow().minimize()
+}
+
+function handleWindowFullscreen() {
+  const win = BrowserWindow.getFocusedWindow();
+  win.setFullScreen(!win.isFullScreen())
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -91,7 +99,8 @@ app.on('ready', () => {
   ipcMain.handle("dropFile", handleFileDrop);
   ipcMain.handle("closeWindow", handleWindowClose);
   ipcMain.handle("minimizeWindow", handleWindowMinimize);
-  ipcMain.handle("expandWindow", handleWindowExpand);
+  ipcMain.handle("toggleWindowExpand", handleWindowExpand);
+  ipcMain.handle("toggleWindowFullscreen", handleWindowFullscreen);
   createWindow();
 });
 

@@ -33,7 +33,8 @@ const buttons = {
 
 const titleButtons = {
   minimize: document.querySelector(".title-bar #minimize"),
-  expand: document.querySelector(".title-bar #expand"),
+  expand: document.querySelector(".title-bar #toggle-expand"),
+  fullscreen: document.querySelector(".title-bar #toggle-fullscreen"),
   close: document.querySelector(".title-bar #close")
 }
 
@@ -48,6 +49,11 @@ const displays = {
 const dropZones = {
   source: document.getElementById("drop-source"),
   target: document.getElementById("drop-target"),
+}
+
+const windowState = {
+  isMaximized: false,
+  isFullscreen: false
 }
 
 // --
@@ -245,7 +251,10 @@ titleButtons.minimize.addEventListener("click", (e) => {
   window.API.minimizeWindow()
 })
 titleButtons.expand.addEventListener("click", (e) => {
-  window.API.expandWindow()
+  window.API.toggleWindowExpand()
+})
+titleButtons.fullscreen.addEventListener("click", (e) => {
+  window.API.toggleWindowFullscreen()
 })
 titleButtons.close.addEventListener("click", (e) => {
   window.API.closeWindow()
